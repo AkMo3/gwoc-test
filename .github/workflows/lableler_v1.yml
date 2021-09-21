@@ -8,23 +8,23 @@ on:
 
 jobs:
   parse_body:
-  runs-on: ubuntu-latest
-  outputs:
-    label: ${{ steps.parse.outputs.label }}
+    runs-on: ubuntu-latest
+    outputs:
+      label: ${{ steps.parse.outputs.label }}
   
-  steps:
-    - name: Parsing content of PR and Issue description
-      id: parse
-      run: |
-        grep "^- [x]" text | cat > temp
-        sed 's/- [x] //' temp > label
-        echo ::set-output name=label::$(cat label)
+    steps:
+      - name: Parsing content of PR and Issue description
+        id: parse
+        run: |
+          grep "^- [x]" text | cat > temp
+          sed 's/- [x] //' temp > label
+          echo ::set-output name=label::$(cat label)
      
-     - name: Label issues
-       env: 
-         LABEL: ${{ needs.parse_body.outputs.label }}
-       uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
-       with:
-         add-labels: "$LABEL"
-         repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Label issues
+        env: 
+          LABEL: ${{ needs.parse_body.outputs.label }}
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
+        with:
+          add-labels: "$LABEL"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
