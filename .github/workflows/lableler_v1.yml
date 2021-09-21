@@ -29,10 +29,8 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comment PR
-        env: 
-          LABEL: ${{ needs.parse_body.outputs.label }}
         uses: checkstyle/contribution/comment-action@master
         with:
-         message: "Label Added $LABEL"
+         message: ${{ needs.parse_body.outputs.label }}
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
