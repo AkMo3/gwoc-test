@@ -16,7 +16,7 @@ jobs:
       - name: Parsing content of PR and Issue description
         id: parse
         run: |
-          grep "^- [x]" text | cat > temp
+          grep "- [x]" text | cat > temp
           sed 's/- [x] //' temp > label
           echo ::set-output name=label::$(cat label)
      
